@@ -16,7 +16,6 @@ get_certificate() {
   --dns-cloudflare \
   --dns-cloudflare-credentials /secrets/cloudflare.ini \
   --dns-cloudflare-propagation-seconds 60 \
-  --dry-run \
   --agree-tos -n \
   --server https://acme-v02.api.letsencrypt.org/directory \
   --email $EMAIL -d $CERT_DOMAINS $args
