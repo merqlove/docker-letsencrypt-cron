@@ -13,10 +13,12 @@ get_certificate() {
   local d=${CERT_DOMAINS//,*/} # read first domain
   echo "Getting certificate for $CERT_DOMAINS"
   certbot certonly \
-  --manual \
-  --preferred-challenges dns \
-  --agree-tos --renew-by-default -n \
-  --text --server https://acme-v02.api.letsencrypt.org/directory \
+  --dns-cloudflare \
+  --dns-cloudflare-credentials /secrets/cloudflare.ini \
+  --dns-cloudflare-propagation-seconds 60 \
+  --dry-run \
+  --agree-tos -n \
+  --server https://acme-v02.api.letsencrypt.org/directory \
   --email $EMAIL -d $CERT_DOMAINS $args
   ec=$?
   echo "certbot exit code $ec"
