@@ -1,4 +1,4 @@
-FROM certbot:1.32.2
+FROM certbot:v1.32.2
 MAINTAINER Alexander Merkulov <sasha@merqlove.ru>
 
 VOLUME /certs
