@@ -12,3 +12,4 @@ services:
       - EMAIL=webmaster@domain1.com
       - CONCAT=true
       - SEPARATE=true
+      - LOG=true
