@@ -6,6 +6,7 @@ services:
     container_name: certbot
     volumes:
       - certbot-data:/certs
+      - letsencrypt-data:/etc/letsencrypt
     restart: always
     environment:
       - DOMAINS=domain1.com domain2.com
@@ -15,3 +16,4 @@ services:
       - LOG=true
 volumes:
   certbot-data:
+  letsencrypt-data:
