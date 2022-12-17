@@ -11,7 +11,7 @@ RUN mkdir /secrets
 ADD crontab /etc/crontabs
 RUN crontab /etc/crontabs/crontab
 
-RUN pip install --no-cache-dir certbot-dns-cloudflare
+RUN pip install --no-cache-dir certbot-dns-cloudflare awscli
 RUN pip install --no-cache-dir "cloudflare>=2.3.1"
 
 COPY ./scripts/ /scripts
