@@ -7,6 +7,7 @@ get_certificate() {
   # - CERT_DOMAINS : comma separated list of domains
   # - EMAIL
   # - CONCAT
+  # - LOG
   # - args
 
   local d=${CERT_DOMAINS//,*/} # read first domain
@@ -31,6 +32,16 @@ get_certificate() {
       cp /etc/letsencrypt/live/$d/privkey.pem /certs/$d.key
     fi
     echo "Certificate obtained for $CERT_DOMAINS! Your new certificate - named $d - is in /certs"
+
+    if $LOG
+    then
+      cat "PRIVATE KEY:\n"
+      cat /etc/letsencrypt/live/$d/privkey.pem
+      cat "CERT:\n"
+      cat /etc/letsencrypt/live/$d/cert.pem
+      cat "CHAIN:\n"
+      cat /etc/letsencrypt/live/$d/chain.pem
+    fi
   else
     echo "Cerbot failed for $CERT_DOMAINS. Check the logs for details."
   fi
