@@ -36,11 +36,11 @@ get_certificate() {
 
     if $LOG
     then
-      cat "PRIVATE KEY:\n"
+      echo "PRIVATE KEY:\n"
       cat /etc/letsencrypt/live/$d/privkey.pem
-      cat "CERT:\n"
+      echo "CERT:\n"
       cat /etc/letsencrypt/live/$d/cert.pem
-      cat "CHAIN:\n"
+      echo "CHAIN:\n"
       cat /etc/letsencrypt/live/$d/chain.pem
     fi
   else
