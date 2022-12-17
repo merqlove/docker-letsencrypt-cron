@@ -5,7 +5,7 @@ services:
     build: .
     container_name: certbot
     volumes:
-      - ./certs:/certs
+      - certbot-data:/certs
     restart: always
     environment:
       - DOMAINS=domain1.com domain2.com
@@ -13,3 +13,5 @@ services:
       - CONCAT=true
       - SEPARATE=true
       - LOG=true
+volumes:
+  certbot-data:
