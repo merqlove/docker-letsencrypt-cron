@@ -1,5 +1,23 @@
 echo "Running certbot for domains $DOMAINS"
 
+upload_certificate() {
+  local d=${CERT_DOMAINS//,*/} # read first domain
+
+  echo "Certificate is uploading for $CERT_DOMAINS! AWS $CERT_ARN"
+
+  if [ -z $CERT_ARN ]
+  then
+    aws acm import-certificate --certificate file:///etc/letsencrypt/live/$d/cert.pem \
+        --certificate-chain file:///etc/letsencrypt/live/$d/chain.pem \
+        --private-key file:///etc/letsencrypt/live/$d/privkey.pem
+  else
+    aws acm import-certificate --certificate file:///etc/letsencrypt/live/$d/cert.pem \
+        --certificate-chain file:///etc/letsencrypt/live/$d/chain.pem \
+        --private-key file:///etc/letsencrypt/live/$d/privkey.pem \
+        --certificate-arn $CERT_ARN
+  fi
+}
+
 get_certificate() {
   # Gets the certificate for the domain(s) CERT_DOMAINS (a comma separated list)
   # The certificate will be named after the first domain in the list
@@ -43,9 +61,21 @@ get_certificate() {
       echo "CHAIN:"
       cat /etc/letsencrypt/live/$d/chain.pem
     fi
+
+    upload_certificate
   else
     echo "Cerbot failed for $CERT_DOMAINS. Check the logs for details."
   fi
+}
+
+get_value_of()
+{
+  variable_name=$1
+  variable_value=""
+  if set | grep -q "^$variable_name="; then
+    eval variable_value="\$$variable_name"
+  fi
+  echo "$variable_value"
 }
 
 args=""
@@ -56,12 +86,16 @@ fi
 
 if $SEPARATE
 then
+  ITER=0
   for d in $DOMAINS
   do
     CERT_DOMAINS=$d
+    CERT_ARN=$(get_value_of "CERT_ARN_$ITER")
     get_certificate
+    ITER=$(expr $ITER + 1)
   done
 else
   CERT_DOMAINS=${DOMAINS// /,}
+  CERT_ARN=${CERT_ARN_0}
   get_certificate
 fi

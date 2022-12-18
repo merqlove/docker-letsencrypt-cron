@@ -10,6 +10,10 @@ services:
     restart: always
     environment:
       - DOMAINS=domain1.com domain2.com
+      - CERTS=aa
+      - AWS_ACCESS_KEY_ID=eeee
+      - AWS_SECRET_ACCESS_KEY=eeee
+      - AWS_DEFAULT_REGION=us-east-1
       - EMAIL=webmaster@domain1.com
       - CONCAT=true
       - SEPARATE=true
