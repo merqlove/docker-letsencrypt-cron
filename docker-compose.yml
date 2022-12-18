@@ -10,10 +10,11 @@ services:
     restart: always
     environment:
       - DOMAINS=domain1.com domain2.com
-      - AWS_ACCESS_KEY_ID=eeee
-      - AWS_SECRET_ACCESS_KEY=eeee
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
       - AWS_DEFAULT_REGION=us-east-1
       - EMAIL=webmaster@domain1.com
+      - CLOUDFLARE_TOKEN=
       - CONCAT=true
       - SEPARATE=true
       - LOG=true

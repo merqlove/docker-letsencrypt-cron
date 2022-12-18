@@ -5,16 +5,19 @@ upload_certificate() {
 
   echo "Certificate is uploading for $CERT_DOMAINS! AWS $CERT_ARN"
 
-  if [ -z $CERT_ARN ]
+  if [ -z $AWS_ACCESS_KEY_ID ]
   then
-    aws acm import-certificate --certificate file:///etc/letsencrypt/live/$d/cert.pem \
-        --certificate-chain file:///etc/letsencrypt/live/$d/chain.pem \
-        --private-key file:///etc/letsencrypt/live/$d/privkey.pem
-  else
-    aws acm import-certificate --certificate file:///etc/letsencrypt/live/$d/cert.pem \
-        --certificate-chain file:///etc/letsencrypt/live/$d/chain.pem \
-        --private-key file:///etc/letsencrypt/live/$d/privkey.pem \
-        --certificate-arn $CERT_ARN
+    if [ -z $CERT_ARN ]
+    then
+      aws acm import-certificate --certificate file:///etc/letsencrypt/live/$d/cert.pem \
+          --certificate-chain file:///etc/letsencrypt/live/$d/chain.pem \
+          --private-key file:///etc/letsencrypt/live/$d/privkey.pem
+    else
+      aws acm import-certificate --certificate file:///etc/letsencrypt/live/$d/cert.pem \
+          --certificate-chain file:///etc/letsencrypt/live/$d/chain.pem \
+          --private-key file:///etc/letsencrypt/live/$d/privkey.pem \
+          --certificate-arn $CERT_ARN
+    fi
   fi
 }
 
