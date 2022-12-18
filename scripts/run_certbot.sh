@@ -5,7 +5,7 @@ upload_certificate() {
 
   echo "Certificate is uploading for $CERT_DOMAINS! AWS $CERT_ARN"
 
-  if [ -z $AWS_ACCESS_KEY_ID ]
+  if [ ! -z $AWS_ACCESS_KEY_ID ]
   then
     if [ -z $CERT_ARN ]
     then
